@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
