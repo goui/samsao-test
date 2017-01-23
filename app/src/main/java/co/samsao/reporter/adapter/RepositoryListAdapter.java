@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -29,6 +31,8 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
 
     private List<Repository> mListOfRepositories;
 
+    private SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm", Locale.CANADA);
+
     public RepositoryListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         // subscribing on the model and getting its list of repositories
@@ -47,7 +51,7 @@ public class RepositoryListAdapter extends RecyclerView.Adapter<RepositoryListAd
         // filling in the repository information
         if (repository != null) {
             holder.fullNameTextView.setText(repository.getFullName());
-            holder.updatedTextView.setText(repository.getUpdatedTime().toString()); // TODO format date
+            holder.updatedTextView.setText(mSimpleDateFormat.format(repository.getUpdatedTime()));
             holder.descriptionTextView.setText(repository.getDescription());
             // when a user clicks on a repository item
             holder.itemView.setOnClickListener(new View.OnClickListener() {
