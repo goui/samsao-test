@@ -1,7 +1,7 @@
 package co.samsao.reporter.main;
 
 /**
- * TODO Javadoc
+ * Presenter for the list of repositories.
  */
 class MainPresenter implements IMainPresenter {
 
@@ -15,5 +15,10 @@ class MainPresenter implements IMainPresenter {
     @Override
     public void detachView() {
         mView = null;
+    }
+
+    @Override
+    public void load() {
+        // TODO load from backend
     }
 }
