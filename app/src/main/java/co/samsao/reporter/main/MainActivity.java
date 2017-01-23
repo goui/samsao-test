@@ -3,11 +3,13 @@ package co.samsao.reporter.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -88,8 +90,28 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         showDetailsDialog(event.getRepository());
     }
 
+    /**
+     * Creates an AlertDialog to show repository details.
+     *
+     * @param repository the repository
+     */
     private void showDetailsDialog(Repository repository) {
-        // TODO create dialog with repository details
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(repository.getFullName());
+
+        // getting the custom layout for the dialog and filling in information
+        View dialogLayout = getLayoutInflater().inflate(R.layout.repository_info, null);
+        TextView languageTextView = (TextView) dialogLayout.findViewById(R.id.language_text_view);
+        languageTextView.setText(repository.getLanguage());
+        TextView defaultBranchTextView = (TextView) dialogLayout.findViewById(R.id.default_branch_text_view);
+        defaultBranchTextView.setText(repository.getDefaultBranch());
+        TextView forksCountTextView = (TextView) dialogLayout.findViewById(R.id.forks_count_text_view);
+        forksCountTextView.setText("" + repository.getForksCount());
+
+        // showing the dialog
+        builder.setView(dialogLayout);
+        builder.setPositiveButton(getString(android.R.string.ok), null);
+        builder.show();
     }
 
     @Override
