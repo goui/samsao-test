@@ -10,11 +10,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.samsao.reporter.R;
 import co.samsao.reporter.adapter.RepositoryListAdapter;
 import co.samsao.reporter.adapter.SimpleDividerItemDecoration;
+import co.samsao.reporter.event.RepositoryClickEvent;
+import co.samsao.reporter.model.Repository;
 
 /**
  * The screen showing all the repositories.
@@ -75,6 +81,27 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRepositoryClickEvent(RepositoryClickEvent event) {
+        showDetailsDialog(event.getRepository());
+    }
+
+    private void showDetailsDialog(Repository repository) {
+        // TODO create dialog with repository details
+    }
+
+    @Override
+    protected void onPause() {
+        EventBus.getDefault().unregister(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
     }
 
     @Override
