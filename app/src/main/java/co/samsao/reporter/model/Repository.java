@@ -23,6 +23,8 @@ public class Repository {
     @SerializedName("forks_count")
     private int forksCount;
 
+    private String description;
+
     public String getFullName() {
         return fullName;
     }
@@ -61,5 +63,13 @@ public class Repository {
 
     public void setForksCount(int forksCount_p) {
         forksCount = forksCount_p;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description_p) {
+        description = description_p;
     }
 }
